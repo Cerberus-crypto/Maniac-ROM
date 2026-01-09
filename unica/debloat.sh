@@ -113,6 +113,7 @@ system/priv-app/SVoiceIME
 SYSTEM_DEBLOAT+="
 system/app/ARCore
 system/app/BixbyWakeup
+system/app/BBCAgent
 system/app/CarrierDefaultApp
 system/app/ccinfo
 system/app/ChromeCustomizations
@@ -124,6 +125,7 @@ system/app/KidsHome_Installer
 system/app/MAPSAgent
 system/app/MDMApp
 system/app/MinusOnePage
+system/app/MoccaMobile
 system/app/PlayAutoInstallConfig
 system/app/Rampart
 system/app/SamsungPassAutofill_v1
@@ -185,6 +187,7 @@ system/priv-app/FotaAgent
 system/priv-app/GameHome
 system/priv-app/ImsLogger
 system/priv-app/IpsGeofence
+system/priv-app/NetworkDiagnostic
 system/priv-app/OdaService
 system/priv-app/OMCAgent5
 system/priv-app/OneDrive_Samsung_v3
@@ -192,10 +195,12 @@ system/priv-app/PaymentFramework
 system/priv-app/SamsungCarKeyFw
 system/priv-app/SamsungPass
 system/priv-app/SamsungPositioning
+system/priv-app/SamsungBilling
 system/priv-app/SKMSAgent
 system/priv-app/SOAgent76
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
+system/priv-app/TalkbackSE
 system/priv-app/YourPhone_P1_5
 system/priv-app/Bixby
 "
