@@ -9,14 +9,12 @@
 
 <p align="center">
   <a href="https://t.me/extremerom">💬 Telegram (Nexus)</a>
-  <a href="https://t.me/WaltersStuff">💬 Telegram (Merkur)</a>
   <a href="https://github.com/ExtremeXT/ExtremeROM/wiki">📖 Wiki</a>
-  <a href="https://github.com/WalterGrayzz/ExtremeROM_Merkur/blob/sixteen/CHANGELOG.md">📝 Changelog</a>
   <a href="https://github.com/ExtremeXT/ExtremeROM/blob/fifteen/MAINTAINERS">🧑‍💻 Maintainers</a>
 </p>
 
-# What is ExtremeROM Merkur?
-ExtremeROM Merkur is a work-in-progress custom firmware for Samsung Galaxy Note20 Ultra.
+# What is ManiacRROM?
+ExtremeROM Merkur is a work-in-progress custom firmware for Samsung Galaxy S20.
 
 It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
 
