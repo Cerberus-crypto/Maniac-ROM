@@ -3,7 +3,6 @@ BLOBS_LIST="
 system/lib64/libenn_wrapper_system.so
 system/lib64/libarcsoft_dualcam_portraitlighting.so
 system/lib64/libdualcam_refocus_gallery_54.so
-system/lib64/libdualcam_refocus_gallery_48.so
 system/lib64/libhybrid_high_dynamic_range.arcsoft.so
 system/lib64/libae_bracket_hdr.arcsoft.so
 system/lib64/libFaceRecognition.arcsoft.so

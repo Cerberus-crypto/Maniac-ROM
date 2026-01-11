@@ -135,8 +135,11 @@ system/app/SimAppDialog
 system/app/Traceur
 system/app/UniversalMDMClient
 system/app/WifiGuider
+system/app/AirGlance
+system/app/Foundation
+system/app/Roboto
+system/app/SamsungOne
 system/etc/default-permissions/default-permissions-com.sec.spp.push.xml
-system/etc/init/digitalkey_init_ble_tss2.rc
 system/etc/init/samsung_pass_authenticator_service.rc
 system/etc/permissions/authfw.xml
 system/etc/permissions/com.samsung.feature.ipsgeofence.xml
@@ -172,6 +175,9 @@ system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/etc/sysconfig/samsungpushservice.xml
 system/hidden/SmartTutor
+system/priv-app/AirCommand
+system/priv-app/AirReadingGlass
+system/priv-app/SmartEye
 system/priv-app/AppUpdateCenter
 system/priv-app/AREmoji
 system/priv-app/AREmojiEditor

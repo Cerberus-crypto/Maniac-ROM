@@ -26,8 +26,8 @@ index 4d173d5d..91e47326 100644
  
      move-result-object p1
  
--    const v0, 0x7f0301d2
-+    const v0, 0x7f0301d3
+-    const v0, 0x7f0301d3
++    const v0, 0x7f0301d4
  
      invoke-virtual {p1, v0}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
  
@@ -44,8 +44,8 @@ index 4d173d5d..91e47326 100644
  
      move-result-object p1
  
--    const v0, 0x7f0301de
-+    const v0, 0x7f0301e6
+-    const v0, 0x7f0301df
++    const v0, 0x7f0301e1
  
      invoke-virtual {p1, v0}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
  
@@ -54,7 +54,7 @@ index 4d173d5d..91e47326 100644
  
      :cond_1
 -    const-string/jumbo p1, "setSecurityEntryArray() : open/EnhancedOpen/wpa2"
-+    const-string/jumbo p1, "setSecurityEntryArray() : open/wpa2"
++    const-string/jumbo p1, "setSecurityEntryArray() : wpa2"
  
      invoke-static {v0, p1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
  
@@ -62,11 +62,8 @@ index 4d173d5d..91e47326 100644
  
      move-result-object p1
  
--    const v0, 0x7f0301dd
-+    const v0, 0x7f0301e0
+-    const v0, 0x7f0301de
++    const v0, 0x7f0301e1
  
      invoke-virtual {p1, v0}, Landroid/content/res/Resources;->getStringArray(I)[Ljava/lang/String;
- 
--- 
-2.51.0
 

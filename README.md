@@ -5,7 +5,7 @@
   <a href="https://github.com/ExtremeXT/ExtremeROM/blob/fifteen/LICENSE"><img loading="lazy" src="https://img.shields.io/github/license/ExtremeXT/ExtremeROM?style=for-the-badge&logo=github"/></a>
   <a href="https://github.com/ExtremeXT/ExtremeROM/graphs/contributors"><img loading="lazy" src="https://img.shields.io/github/contributors/ExtremeXT/ExtremeROM?style=for-the-badge"/></a>
 </p>
-<p align="center">ExtremeROM Merkur is a work-in-progress custom firmware for Samsung Galaxy devices.</p>
+<p align="center">Maniac Rom  is a work-in-progress custom firmware for Samsung Galaxy S20 Only.</p>
 
 <p align="center">
   <a href="https://t.me/extremerom">💬 Telegram (Nexus)</a>

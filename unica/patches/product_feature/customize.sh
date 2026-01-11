@@ -213,6 +213,9 @@ fi
 
 if [ -f "$FW_DIR/${MODEL}_${REGION}/system/system/etc/permissions/com.sec.feature.cover.xml" ]; then
     LOG_STEP_IN "- Adding LED Case Cover support"
+	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_nci_jni.so"
+	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_prop_extn.so"
+	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_vendor_extn.so"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/priv-app/LedCoverService/LedCoverService.apk"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/etc/permissions/privapp-permissions-com.sec.android.cover.ledcover.xml"
     LOG_STEP_OUT
@@ -224,10 +227,54 @@ if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.st
     LOG_STEP_OUT
 fi
 
+DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
+DECODE_APK "system" "system/framework/semwifi-service.jar"
+
+if $SOURCE_SUPPORT_HOTSPOT_DUALAP; then
+    if ! $TARGET_SUPPORT_HOTSPOT_DUALAP; then
+        LOG_STEP_IN "- Applying Hotspot DualAP patches"
+        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0001-Disable-DualAP-support.patch"
+        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/wifi/SecSettings.apk/0001-Disable-DualAP-support.patch"
+        LOG_STEP_OUT
+    fi
+fi
+
+if $SOURCE_SUPPORT_HOTSPOT_WPA3; then
+    if ! $TARGET_SUPPORT_HOTSPOT_WPA3; then
+        LOG_STEP_IN "- Applying Hotspot WPA3 patches"
+        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0002-Disable-Hotspot-WPA3-support.patch"
+        LOG_STEP_OUT
+    fi
+fi
+
+if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
+    if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
+        LOG_STEP_IN "- Applying Hotspot 6GHz patches"
+        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0003-Disable-Hotspot-6GHz-support.patch"
+        LOG_STEP_OUT
+    fi
+fi
+ if $SOURCE_SUPPORT_HOTSPOT_WIFI_6; then
+    if ! $TARGET_SUPPORT_HOTSPOT_WIFI_6; then
+         LOG_STEP_IN "- Applying Hotspot Wi-Fi 6 patches"
+         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/wifi/SecSettings.apk/0002-Disable-Hotspot-Wi-Fi-6.patch"
+         LOG_STEP_OUT
+		fi
+fi
+
 if $SOURCE_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
     if ! $TARGET_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
         LOG_STEP_IN "- Applying Hotspot Enhanced Open patches"
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/wifi/SecSettings.apk/0003-Disable-Hotspot-Enhanced-Open.patch"
+        LOG_STEP_OUT
+    fi
+fi
+
+if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
+    if ! $TARGET_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
+        LOG_STEP_IN "Applying virtual vibration patches"
+        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/audio/SecSettings.apk/0001-Disable-Virtual-Vibration-support.patch"
+        APPLY_PATCH "system" "system/priv-app/SecSoundPicker/SecSoundPicker.apk" "$SRC_DIR/unica/patches/product_feature/audio/SecSoundPicker.apk/0001-Disable-Virtual-Vibration-support.patch"
         LOG_STEP_OUT
     fi
 fi
