@@ -13,7 +13,7 @@
   <a href="https://github.com/ExtremeXT/ExtremeROM/blob/fifteen/MAINTAINERS">🧑‍💻 Maintainers</a>
 </p>
 
-# What is ManiacRROM?
+# What is ManiacROM ?
 ExtremeROM Merkur is a work-in-progress custom firmware for Samsung Galaxy S20.
 
 It's based on the latest and greatest iteration of Samsung's UX and it also includes additional features and tweaks to ensure the best possible experience out of the box.
