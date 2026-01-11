@@ -611,7 +611,7 @@ PRINT_HEADER()
     echo    'ui_print("Volume UP detected. Proceeding!");'
     echo    'ui_print(" ");'
     echo    'ui_print("****************************************************");'
-    echo    'ui_print("             M A N I A C ---- R O M                 ");'
+    echo    'ui_print("              M A N I A C ---- R O M                ");'
     echo    'ui_print("****************************************************");'
 }
 # ]
