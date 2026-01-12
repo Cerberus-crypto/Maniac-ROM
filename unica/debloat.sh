@@ -28,6 +28,10 @@ VENDOR_DEBLOAT+="
 etc/dpolicy
 "
 
+# Samsung PROCA certificate DB
+system/bin/ssud
+system/etc/init/digitalkey_init_uwb_tss2.rc
+system/etc/init/sdp_cryptod.rc
 # Recovery restoration script
 VENDOR_DEBLOAT+="
 recovery-from-boot.p
