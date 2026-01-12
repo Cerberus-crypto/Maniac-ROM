@@ -226,14 +226,19 @@ if [ ! -f "$FW_DIR/${MODEL}_${REGION}/vendor/etc/permissions/android.hardware.st
     APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/strongbox/framework.jar/0001-Disable-StrongBox-in-DevRootKeyATCmd.patch"
     LOG_STEP_OUT
 fi
-
-if $SOURCE_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
-    if ! $TARGET_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
-        LOG_STEP_IN "- Applying Hotspot Enhanced Open patches"
-        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/wifi/SecSettings.apk/0003-Disable-Hotspot-Enhanced-Open.patch"
+    
+DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
+DECODE_APK "system" "system/framework/semwifi-service.jar"
+if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
+    if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
+        LOG_STEP_IN "- Applying Hotspot 6GHz patches"
+        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0003-Disable-Hotspot-6GHz-support.patch"
         LOG_STEP_OUT
     fi
 fi
+
+
+
 if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
     if ! $TARGET_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
         LOG_STEP_IN "Applying virtual vibration patches"
