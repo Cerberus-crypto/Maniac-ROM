@@ -231,6 +231,13 @@ DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 DECODE_APK "system" "system/framework/semwifi-service.jar"
 
 
+if $SOURCE_SUPPORT_HOTSPOT_WPA3; then
+    if ! $TARGET_SUPPORT_HOTSPOT_WPA3; then
+        LOG_STEP_IN "- Applying Hotspot WPA3 patches"
+        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0002-Disable-Hotspot-WPA3-support.patch"
+        LOG_STEP_OUT
+    fi
+fi
 
 if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
     if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
