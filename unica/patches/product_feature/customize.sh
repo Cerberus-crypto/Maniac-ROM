@@ -229,6 +229,9 @@ fi
     
 DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
 DECODE_APK "system" "system/framework/semwifi-service.jar"
+
+
+
 if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
     if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
         LOG_STEP_IN "- Applying Hotspot 6GHz patches"
