@@ -116,6 +116,14 @@ system/priv-app/SVCAgent
 SYSTEM_DEBLOAT+="
 system/priv-app/SVoiceIME
 "
+# UWB
+SYSTEM_DEBLOAT+="
+system/etc/permissions/privapp-permissions-com.sec.android.app.uwbtest.xml
+system/etc/libuwb-cal.conf
+system/framework/semuwb-service.jar
+system/lib/libtflite_uwb_jni.so
+"
+
 
 SYSTEM_DEBLOAT+="
 system/app/ARCore
