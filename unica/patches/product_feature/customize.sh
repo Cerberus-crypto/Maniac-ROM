@@ -212,12 +212,13 @@ if $SOURCE_IS_ESIM_SUPPORTED; then
 fi
 
 if [ -f "$FW_DIR/${MODEL}_${REGION}/system/system/etc/permissions/com.sec.feature.cover.xml" ]; then
-    LOG_STEP_IN "- Adding LED Case Cover support"
+    LOG_STEP_IN "- Adding LED Case Cover support & Wallpaper from S25FE"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_nci_jni.so"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_prop_extn.so"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_vendor_extn.so"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/priv-app/LedCoverService/LedCoverService.apk"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/etc/permissions/privapp-permissions-com.sec.android.cover.ledcover.xml"
+    ADD_TO_WORK_DIR "p3sxxx" "system" "system/priv-app/wallpaper-res/wallpaper-res.apk"
     LOG_STEP_OUT
 fi
 
@@ -247,6 +248,13 @@ if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
     fi
 fi
 
+if $SOURCE_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
+    if ! $TARGET_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
+        LOG_STEP_IN "- Applying Hotspot Open patches"
+        APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/wifi/SecSettings.apk/0003-Disable-Hotspot-Open.patch"
+        LOG_STEP_OUT
+    fi
+fi
 
 
 if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
