@@ -154,6 +154,7 @@ system/app/AirGlance
 system/app/Foundation
 system/app/Roboto
 system/app/SamsungOne
+system/hidden/INTERNAL_SDCARD
 system/etc/default-permissions/default-permissions-com.sec.spp.push.xml
 system/etc/init/samsung_pass_authenticator_service.rc
 system/etc/permissions/authfw.xml
@@ -222,7 +223,6 @@ system/priv-app/SOAgent76
 system/priv-app/SPPPushClient
 system/priv-app/StickerFaceARAvatar
 system/priv-app/TalkbackSE
-system/priv-app/YourPhone_P1_5
 system/priv-app/Bixby
 "
 
