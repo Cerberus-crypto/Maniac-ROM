@@ -83,9 +83,6 @@ if [[ "$SOURCE_FP_SENSOR_CONFIG" != "$TARGET_FP_SENSOR_CONFIG" ]]; then
     done
 
     if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "ultrasonic" ]]; then
-        #ADD_TO_WORK_DIR "e1sxxx" "system" "system/bin/surfaceflinger"
-        #ADD_TO_WORK_DIR "e1sxxx" "system" "system/lib64/libgui.so"
-        #ADD_TO_WORK_DIR "e1sxxx" "system" "system/lib64/libui.so"
         DECODE_APK "system" "system/priv-app/BiometricSetting/BiometricSetting.apk"
         sed -i "s/$SOURCE_FP_SENSOR_CONFIG/$TARGET_FP_SENSOR_CONFIG/g" "$APKTOOL_DIR/system/priv-app/BiometricSetting/BiometricSetting.apk/smali/com/samsung/android/biometrics/app/setting/DisplayStateManager.smali"
         APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/fingerprint/framework.jar/0001-Set-mSensorType-to-SENSOR_TYPE_ULTRASONIC.patch"
@@ -122,15 +119,9 @@ fi
 if ! $SOURCE_HAS_QHD_DISPLAY; then
     if $TARGET_HAS_QHD_DISPLAY; then
         LOG_STEP_IN "- Applying multi resolution patches"
-
         DECODE_APK "system" "system/framework/framework.jar"
-        DECODE_APK "system" "system/framework/gamemanager.jar"
         DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
-
-        ADD_TO_WORK_DIR "$MODPATH/resolution/system" "system" "."
-        ADD_TO_WORK_DIR "e2sxxx" "system" "media"
-        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-dynamic-resolution-control.patch"
-        
+        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-dynamic-resolution-control.patch"     
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/resolution/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_DYN_RESOLUTION_CONTROL" "WQHD,FHD,HD"
         LOG_STEP_OUT
@@ -229,13 +220,12 @@ if $SOURCE_IS_ESIM_SUPPORTED; then
 fi
 
 if [ -f "$FW_DIR/${MODEL}_${REGION}/system/system/etc/permissions/com.sec.feature.cover.xml" ]; then
-    LOG_STEP_IN "- Adding LED Case Cover support & Wallpaper from S25FE"
+    LOG_STEP_IN "- Adding LED Case Cover support"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_nci_jni.so"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_prop_extn.so"
 	DELETE_FROM_WORK_DIR "system" "system/lib/libnfc_vendor_extn.so"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/priv-app/LedCoverService/LedCoverService.apk"
     ADD_TO_WORK_DIR "p3sxxx" "system" "system/etc/permissions/privapp-permissions-com.sec.android.cover.ledcover.xml"
-    ADD_TO_WORK_DIR "p3sxxx" "system" "system/priv-app/wallpaper-res/wallpaper-res.apk"
     LOG_STEP_OUT
 fi
 
@@ -273,6 +263,24 @@ if $SOURCE_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
     fi
 fi
 
+if ! $SOURCE_AUDIO_SUPPORT_ACH_RINGTONE; then
+    if $TARGET_AUDIO_SUPPORT_ACH_RINGTONE; then
+        LOG_STEP_IN "- Applying ACH ringtone patches"
+#        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/audio/framework.jar/0001-Enable-ACH-ringtone-support.patch"
+
+#        LOG "- Extracting ACH ringtone assets"
+#        DELETE_FROM_WORK_DIR "system" "system/media/audio/ringtones"
+#        DELETE_FROM_WORK_DIR "system" "system/media/audio/notifications"
+#        ADD_TO_WORK_DIR "q7qzcx" "system" "system/media/audio/ringtones"
+#        ADD_TO_WORK_DIR "q7qzcx" "system" "system/media/audio/notifications"
+        SET_PROP "vendor" "ro.config.ringtone" "ACH_Galaxy_Bells.ogg"
+        SET_PROP "vendor" "ro.config.notification_sound" "ACH_Spaceline.ogg"
+        SET_PROP "vendor" "ro.config.alarm_alert" "ACH_Homecoming.ogg"
+        SET_PROP "vendor" "ro.config.ringtone_2" "ACH_Atomic_Bell.ogg"
+        SET_PROP "vendor" "ro.config.notification_sound_2" "ACH_Signal.ogg"
+        LOG_STEP_OUT
+    fi
+fi
 
 if $SOURCE_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
     if ! $TARGET_AUDIO_SUPPORT_VIRTUAL_VIBRATION; then
