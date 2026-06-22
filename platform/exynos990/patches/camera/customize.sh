@@ -135,3 +135,18 @@ done
 wait $(jobs -p) || exit 1
 
 LOG_STEP_OUT
+
+LOG_STEP_IN "- Adding S22 Ultra (b0sxxx) libs food"
+BLOBS_LIST="
+system/lib64/libFood.camera.samsung.so
+system/lib64/libFoodDetector.camera.samsung.so
+"
+for blob in $BLOBS_LIST
+do
+    ADD_TO_WORK_DIR "b0sxxx" "system" "$blob" 0 0 644 "u:object_r:system_file:s0" &
+done
+
+# shellcheck disable=SC2046
+wait $(jobs -p) || exit 1
+
+LOG_STEP_OUT

@@ -32,7 +32,7 @@ etc/dpolicy
 SYSTEM_DEBLOAT+="
 
 system/etc/proca.db
-system/etc/init/digitalkey_init_uwb_tss2.rc
+system/etc/init/digitalkey_init_ble_tss2.rc
 system/etc/init/sdp_cryptod.rc
 "
 # Recovery restoration script
@@ -64,7 +64,6 @@ system/preload
 # HwModuleTest
 SYSTEM_DEBLOAT+="
 system/app/Cameralyzer
-system/app/FactoryAirCommandManager
 system/app/FactoryCameraFB
 system/app/HMT
 system/app/WlanTest
@@ -116,14 +115,6 @@ system/priv-app/SVCAgent
 SYSTEM_DEBLOAT+="
 system/priv-app/SVoiceIME
 "
-# UWB
-SYSTEM_DEBLOAT+="
-system/etc/permissions/privapp-permissions-com.sec.android.app.uwbtest.xml
-system/etc/libuwb-cal.conf
-system/framework/semuwb-service.jar
-system/lib/libtflite_uwb_jni.so
-"
-
 
 SYSTEM_DEBLOAT+="
 system/app/ARCore
@@ -136,6 +127,7 @@ system/app/ClockPackage
 system/app/DsmsAPK
 system/app/Fast
 system/app/FBAppManager_NS
+system/app/FactoryAirCommandManager
 system/app/KidsHome_Installer
 system/app/MAPSAgent
 system/app/MDMApp
@@ -150,7 +142,6 @@ system/app/SimAppDialog
 system/app/Traceur
 system/app/UniversalMDMClient
 system/app/WifiGuider
-system/app/AirGlance
 system/app/Foundation
 system/app/Roboto
 system/app/SamsungOne
@@ -191,9 +182,6 @@ system/etc/sysconfig/samsungauthframework.xml
 system/etc/sysconfig/samsungpassapp.xml
 system/etc/sysconfig/samsungpushservice.xml
 system/hidden/SmartTutor
-system/priv-app/AirCommand
-system/priv-app/AirReadingGlass
-system/priv-app/SmartEye
 system/priv-app/AppUpdateCenter
 system/priv-app/AREmoji
 system/priv-app/AREmojiEditor

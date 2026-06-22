@@ -116,20 +116,61 @@ if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
     done
 fi
 
+# SEC_PRODUCT_FEATURE_LCD_CONFIG_SEAMLESS_BRT
+# SEC_PRODUCT_FEATURE_LCD_CONFIG_SEAMLESS_LUX
+#
+# Apply before SEC_PRODUCT_FEATURE_LCD_CONFIG_HFR_* to avoid conflicts
+if [[ "$SOURCE_LCD_CONFIG_SEAMLESS_BRT" != "$TARGET_LCD_CONFIG_SEAMLESS_BRT" ]] || \
+        [[ "$SOURCE_LCD_CONFIG_SEAMLESS_LUX" != "$TARGET_LCD_CONFIG_SEAMLESS_LUX" ]]; then
+    if [[ "$SOURCE_LCD_CONFIG_SEAMLESS_BRT" != "none" ]] && [[ "$SOURCE_LCD_CONFIG_SEAMLESS_LUX" != "none" ]] && \
+            [[ "$TARGET_LCD_CONFIG_SEAMLESS_BRT" == "none" ]] && [[ "$TARGET_LCD_CONFIG_SEAMLESS_LUX" == "none" ]]; then
+        APPLY_PATCH "system" "system/framework/framework.jar" \
+            "$MODPATH/hfr/framework.jar/0001-Remove-brightness-threshold-values.patch"
+    elif [[ "$SOURCE_LCD_CONFIG_SEAMLESS_BRT" != "none" ]] && [[ "$SOURCE_LCD_CONFIG_SEAMLESS_LUX" != "none" ]] && \
+            [[ "$TARGET_LCD_CONFIG_SEAMLESS_BRT" != "none" ]] && [[ "$TARGET_LCD_CONFIG_SEAMLESS_LUX" != "none" ]]; then
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali" "replace" \
+            "dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V" \
+            "SEAMLESS_BRT: $SOURCE_LCD_CONFIG_SEAMLESS_BRT" \
+            "SEAMLESS_BRT: $TARGET_LCD_CONFIG_SEAMLESS_BRT"
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali" "replace" \
+            "dump(Ljava/io/PrintWriter;Ljava/lang/String;Z)V" \
+            "SEAMLESS_LUX: $SOURCE_LCD_CONFIG_SEAMLESS_LUX" \
+            "SEAMLESS_LUX: $TARGET_LCD_CONFIG_SEAMLESS_LUX"
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali" "replace" \
+            "getMainInstance()Lcom/samsung/android/hardware/display/RefreshRateConfig;" \
+            "$SOURCE_LCD_CONFIG_SEAMLESS_BRT" \
+            "$TARGET_LCD_CONFIG_SEAMLESS_BRT"
+        SMALI_PATCH "system" "system/framework/framework.jar" \
+            "smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali" "replace" \
+            "getMainInstance()Lcom/samsung/android/hardware/display/RefreshRateConfig;" \
+            "$SOURCE_LCD_CONFIG_SEAMLESS_LUX" \
+            "$TARGET_LCD_CONFIG_SEAMLESS_LUX"
+    else
+        # TODO handle these conditions
+        LOG_MISSING_PATCHES "SOURCE_LCD_CONFIG_SEAMLESS_BRT" "TARGET_LCD_CONFIG_SEAMLESS_BRT" || true
+        LOG_MISSING_PATCHES "SOURCE_LCD_CONFIG_SEAMLESS_LUX" "TARGET_LCD_CONFIG_SEAMLESS_LUX"
+    fi
+fi
+
 if ! $SOURCE_HAS_QHD_DISPLAY; then
     if $TARGET_HAS_QHD_DISPLAY; then
-        LOG_STEP_IN "- Applying multi resolution patches"
+        LOG_STEP_IN "- Applying multi resolution patches"  
         DECODE_APK "system" "system/framework/framework.jar"
+        DECODE_APK "system" "system/framework/gamemanager.jar"
         DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
-        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-dynamic-resolution-control.patch"     
+        APPLY_PATCH "system" "system/framework/framework.jar" "$SRC_DIR/unica/patches/product_feature/resolution/framework.jar/0001-Enable-FW_SUPPORT_MULTI_RESOLUTION.patch" 
+        APPLY_PATCH "system" "system/framework/gamemanager.jar" "$SRC_DIR/unica/patches/product_feature/resolution/gamemanager.jar/0001-Enable-dynamic-resolution-control.patch"
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/resolution/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_DYN_RESOLUTION_CONTROL" "WQHD,FHD,HD"
+        ADD_TO_WORK_DIR "$MODPATH/resolution/system" "system" "."
         LOG_STEP_OUT
     fi
 fi
 if [[ "$SOURCE_HFR_MODE" != "$TARGET_HFR_MODE" ]]; then
     LOG_STEP_IN "- Applying HFR_MODE patches"
-
     DECODE_APK "system" "system/framework/framework.jar"
     DECODE_APK "system" "system/framework/gamemanager.jar"
     DECODE_APK "system" "system/framework/secinputdev-service.jar"
@@ -247,13 +288,13 @@ if $SOURCE_SUPPORT_HOTSPOT_WPA3; then
     fi
 fi
 
-if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
-    if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
-        LOG_STEP_IN "- Applying Hotspot 6GHz patches"
-        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0003-Disable-Hotspot-6GHz-support.patch"
-        LOG_STEP_OUT
-    fi
-fi
+#if $SOURCE_SUPPORT_HOTSPOT_6GHZ; then
+#    if ! $TARGET_SUPPORT_HOTSPOT_6GHZ; then
+#        LOG_STEP_IN "- Applying Hotspot 6GHz patches"
+#        APPLY_PATCH "system" "system/framework/semwifi-service.jar" "$SRC_DIR/unica/patches/product_feature/wifi/semwifi-service.jar/0003-Disable-Hotspot-6GHz-support.patch"
+#        LOG_STEP_OUT
+#    fi
+#fi
 
 if $SOURCE_SUPPORT_HOTSPOT_ENHANCED_OPEN; then
     if ! $TARGET_SUPPORT_HOTSPOT_ENHANCED_OPEN; then

@@ -4,41 +4,40 @@ EXTREMEKRNL_REPO="https://github.com/ricci205GTI/android_kernel_samsung_exynos99
 BUILD_KERNEL()
 {
     local PARENT=$(pwd)
-    cd $KERNEL_TMP_DIR
+    
+    # Ensure we are in the correct directory
+    cd "$KERNEL_TMP_DIR" || ABORT "BUILD_KERNEL: Cannot find $KERNEL_TMP_DIR"
 
+    LOG "- Running build for ${TARGET_CODENAME}"
     EVAL "./build.sh -m ${TARGET_CODENAME} -k y -r n"
 
     # Fixup for LTE devices
+    LOG "- Running build for ${TARGET_CODENAME}lte"
     EVAL "./build.sh -m ${TARGET_CODENAME}lte -k n -r n -d y"
 
-    cd $PARENT
+    cd "$PARENT"
 }
 
 SAFE_PULL_CHANGES()
 {
     set -eo pipefail
-
     local PARENT=$(pwd)
 
-    cd "$KERNEL_TMP_DIR"
-
+    cd "$KERNEL_TMP_DIR" || ABORT "SAFE_PULL: Directory missing"
     EVAL "git fetch origin"
 
     LOCAL=$(git rev-parse @)
     REMOTE=$(git rev-parse origin/main)
     BASE=$(git merge-base @ origin/main)
 
-    # Now we have three cases that we need to take care of.
     if [[ "$LOCAL" == "$REMOTE" ]]; then
-        LOG "- Local branch is up-to-date with remote."
+        LOG "- Local branch is up-to-date."
     elif [[ "$LOCAL" == "$BASE" ]]; then
-        LOG "- Fast-forward possible. Pulling."
+        LOG "- Fast-forwarding."
         EVAL "git pull --ff-only"
-    elif [[ "$REMOTE" == "$BASE" ]]; then
-        LOGW "- Local branch is ahead of remote. Not doing anything."
     else
-        cd "$PARENT"
-        ABORT "Remote history has diverged (possible force-push)."
+        LOGW "- Local branch diverged or ahead. Resetting to remote."
+        git reset --hard origin/main
     fi
 
     cd "$PARENT"
@@ -46,37 +45,52 @@ SAFE_PULL_CHANGES()
 
 REPLACE_KERNEL_BINARIES()
 {
-    local KERNEL_TMP_DIR="$KERNEL_TMP_DIR-$TARGET_PLATFORM"
-    [[ ! -d "$KERNEL_TMP_DIR" ]] && mkdir -p "$KERNEL_TMP_DIR"
+    # 1. Define the directory name based on your requirement
+    # Using 'out' as the parent folder
+    KERNEL_TMP_DIR="out/kernel_tmp-${TARGET_PLATFORM}"
 
-    if [[ -d "$KERNEL_TMP_DIR/.git" ]]; then
-        # If the kernel repository already exists, navigate into it
-        cd "$KERNEL_TMP_DIR" || exit
-        
-        # Fetch the latest changes from the remote server (extremely fast)
-        git fetch
-        
-        # Force the local code to exactly match the remote, preventing any conflict errors
-        git reset --hard FETCH_HEAD
-        
-        # Return to the previous directory to continue the build process
-        cd - > /dev/null || exit
-    else
-        # If the kernel directory doesn't exist, clone it from scratch
-        EVAL "git clone --branch bpf111 --single-branch --recurse-submodules \"$EXTREMEKRNL_REPO\" \"$KERNEL_TMP_DIR\""
+    # 2. Check if the directory is missing
+    if [[ ! -d "$KERNEL_TMP_DIR" ]]; then
+        LOG "- Kernel directory missing. Cloning into $KERNEL_TMP_DIR..."
+        # Ensure 'out' exists before cloning
+        mkdir -p -- "out"
+        EVAL "git clone --branch bpf111 --single-branch --recurse-submodules \"$EXTREMEKRNL_REPO\" \"$KERNEL_TMP_DIR\"" || ABORT "Clone failed"
     fi
 
-    LOG "- Running the kernel build script."
+    # 3. Repository Sync
+    if [[ -d "$KERNEL_TMP_DIR/.git" ]]; then
+        cd "$KERNEL_TMP_DIR" || exit
+        LOG "- Syncing source code..."
+        git fetch --all
+        git reset --hard FETCH_HEAD
+        cd - > /dev/null || exit
+    else
+        ABORT "Directory exists but is not a git repo: $KERNEL_TMP_DIR"
+    fi
+
+    # 4. Execute Build
+    LOG "- Starting kernel build process."
     BUILD_KERNEL
 
+    # 5. Artifact Management
+    [[ ! -d "$WORK_DIR/kernel" ]] && mkdir -p -- "$WORK_DIR/kernel"
+
     for i in "boot" "dtbo"; do
-        [[ -f "$WORK_DIR/kernel/$i.img" ]] && rm -f "$WORK_DIR/kernel/$i.img"
-        mv -f "$KERNEL_TMP_DIR/build/out/$TARGET_CODENAME/$i.img" "$WORK_DIR/kernel/$i.img"
+        local SRC="$KERNEL_TMP_DIR/build/out/$TARGET_CODENAME/$i.img"
+        if [[ -f "$SRC" ]]; then
+            rm -f "$WORK_DIR/kernel/$i.img"
+            mv -f "$SRC" "$WORK_DIR/kernel/$i.img"
+        else
+            LOGW "Artifact $i.img not found at $SRC"
+        fi
     done
 
-    # And now for the LTE DTBOs
+    # LTE Artifacts
     if [[ "$TARGET_CODENAME" != "r8s" ]] && [[ "$TARGET_CODENAME" != "z3s" ]]; then
-	    mv -f "$KERNEL_TMP_DIR/build/out/${TARGET_CODENAME}lte/dtbo.img" "$WORK_DIR/kernel/dtbo_lte.img"
+        local LTE_SRC="$KERNEL_TMP_DIR/build/out/${TARGET_CODENAME}lte/dtbo.img"
+        if [[ -f "$LTE_SRC" ]]; then
+            mv -f "$LTE_SRC" "$WORK_DIR/kernel/dtbo_lte.img"
+        fi
     fi
 }
 # ]

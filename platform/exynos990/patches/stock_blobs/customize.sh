@@ -1,4 +1,4 @@
-# S22 Ultra OneUI 8 -> SoundBooster 1100
+# S22 OneUI 8 -> SoundBooster 1100
 # S20/N20 Series -> SoundBooster 1050
 LOG_STEP_IN "- Replacing SoundBooster"
 DELETE_FROM_WORK_DIR "system" "system/lib64/lib_SoundBooster_ver1100.so"

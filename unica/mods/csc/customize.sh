@@ -76,3 +76,11 @@ for f in $FTP; do
     sed -i "s/CscFeature_Common_SupportZProjectFunctionInGlobal/CscFeature_Setting_SupportRealTimeNetworkSpeed/g" "$APKTOOL_DIR/$f"
 done
 LOG_STEP_OUT
+
+# Enable Power off lock feature
+SMALI_PATCH "system" "system/framework/framework.jar" \
+    "smali_classes6/com/samsung/android/globalactions/util/SystemPropertiesWrapper.smali" "return" \
+    'isBrazilianCountryISO()Z' 'true'
+SMALI_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" \
+    "smali/com/android/systemui/bixby2/controller/DeviceController.smali" "return" \
+    'isSupportPowerOffLock()Z' 'true'

@@ -39,7 +39,7 @@ system/priv-app/sec_camerax_service
 
 # Wi-Fi Hotspot Overlays
 PRODUCT_DEBLOAT+="
-overlay/SoftapOverlay6GHz
+overlay/SoftapOverlayQC
 
 
 "
