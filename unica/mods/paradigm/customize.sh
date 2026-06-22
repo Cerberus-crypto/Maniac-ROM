@@ -33,7 +33,14 @@ APPLY_PATCH "system" "system/priv-app/SecSoundPicker/SecSoundPicker.apk" \
     "$MODPATH/brandsound/SecSoundPicker.apk/0001-Enable-SUPPORT_SAMSUNG_BRAND_SOUND_ONEUI_7.patch"
 LOG_STEP_OUT
 
+# Adaptive colour tone
+LOG_STEP_IN "- Adding Adaptive colour tone feature"
 
+APPLY_PATCH "system" "system/priv-app/SettingsProvider/SettingsProvider.apk" \
+    "$MODPATH/ead/SettingsProvider.apk/0001-Add-Adaptive-color-tone-feature.patch"
+APPLY_PATCH "system_ext" "priv-app/SystemUI/SystemUI.apk" \
+    "$MODPATH/ead/SystemUI.apk/0001-Add-Adaptive-color-tone-toggle.patch"
+LOG_STEP_OUT
 
 # Set AI Version to 20253 (latest)
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION" "20253"
