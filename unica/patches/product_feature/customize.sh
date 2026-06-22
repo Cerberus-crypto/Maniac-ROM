@@ -166,6 +166,7 @@ if ! $SOURCE_HAS_QHD_DISPLAY; then
         APPLY_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" "$SRC_DIR/unica/patches/product_feature/resolution/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_COMMON_CONFIG_DYN_RESOLUTION_CONTROL" "WQHD,FHD,HD"
         ADD_TO_WORK_DIR "b0sxxx" "system" "media"
+		ADD_TO_WORK_DIR "$MODPATH/resolution/system" "system" "."
 		ADD_TO_WORK_DIR "b0sxxx" "system" "system/media/battery_error.spi" 0 0 644 "u:object_r:system_file:s0"
         ADD_TO_WORK_DIR "b0sxxx" "system" "system/media/battery_low.spi" 0 0 644 "u:object_r:system_file:s0"
         ADD_TO_WORK_DIR "b0sxxx" "system" "system/media/battery_protection.spi" 0 0 644 "u:object_r:system_file:s0"
