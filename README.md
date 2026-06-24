@@ -82,7 +82,7 @@ A big thanks goes to the following for their invaluable contributions in no part
 - **[Ocin4Ever](https://github.com/Ocin4Ever)** for a lot of help especially on smali, advice and emotional support :D
 - **[Igor](https://github.com/BotchedRPR)** for getting me into porting, teaching me the basics, and emotional support down the road
 - **[Halal Beef](https://github.com/halal-beef)** for lk3rd, testing and misc help
-- **[Artisan] (ArtisanROM - A work-in-progress ROM based on OneUI aiming for simplicity and ease of use.)** 
+- **[Android-Artisan](https://github.com/Android-Artisan)** for ArtisanROM Quant is a work-in-progress custom firmware for Samsung Galaxy devices.
 - **[Emad](https://github.com/emadhamid7)** for help with S10-specific fixes
 - **[Duhan](https://github.com/duhansysl)** for help with vendor backports, a lot of fixes and advice
 - **[Anan](https://github.com/ananjaser1211)** for all of his contributions to OneUI porting
