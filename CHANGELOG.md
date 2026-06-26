@@ -5,7 +5,7 @@
 - Support for x1s only
 
 . OneUI 8.0
-- Baase S22  Ultra (S908BXXSNGZD7) May patch 2026
+- Baase S22 (S901BXXSNGZD7) May patch 2026
 
 
 
