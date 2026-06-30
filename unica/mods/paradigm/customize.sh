@@ -100,6 +100,12 @@ ADD_TO_WORK_DIR "pa2qxxx" "system" "system/lib64/libveframework.videoeditor.sams
 SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_AUDIO_CONFIG_MULTISOURCE_SEPARATOR" "{FastScanning_6, SourceSeparator_4, Version_1.3.0}"
 LOG_STEP_OUT
 
+# Add 360 degree rotation
+LOG_STEP_IN "- Adding 360 degree rotation"
+APPLY_PATCH "system" "system/framework/services.jar" \
+        "$MODPATH/rotation/services.jar/0001-Add 360 degree rotation.patch"
+LOG_STEP_OUT
+
 # Now brief
 # Requires SEC_FLOATING_FEATURE_COMMON_CONFIG_AI_VERSION >= 20251
 # or SEC_FLOATING_FEATURE_FRAMEWORK_SUPPORT_AI_BRIEF_FOR_UT
