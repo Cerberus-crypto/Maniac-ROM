@@ -1,4 +1,3 @@
-
 /vendor u:object_r:vendor_file:s0
 /vendor/bin u:object_r:vendor_file:s0
 /vendor/bin/hw u:object_r:vendor_file:s0
@@ -66,6 +65,9 @@
 /vendor/firmware/uwb u:object_r:vendor_firmware_file:s0
 /vendor/firmware/uwb/libsr100t_dev_fw\.bin u:object_r:vendor_firmware_file:s0
 /vendor/firmware/uwb/libsr100t_prod_fw\.bin u:object_r:vendor_firmware_file:s0
+/vendor/lib u:object_r:vendor_file:s0
+/vendor/lib/libSingleTakeBlurDetection\.uniplugin@1\.0\.so u:object_r:vendor_file:s0
+/vendor/lib/libtensorflowLite\.singletake\.camera\.samsung\.so u:object_r:vendor_file:s0
 /vendor/lib64 u:object_r:vendor_file:s0
 /vendor/lib64/android\.hardware\.light-V1-ndk_platform\.so u:object_r:vendor_file:s0
 /vendor/lib64/libmemunreachable\.so u:object_r:vendor_file:s0
@@ -73,6 +75,8 @@
 /vendor/lib64/libsec-ril\.so u:object_r:vendor_file:s0
 /vendor/lib64/libsemnativecarrierfeature\.so u:object_r:vendor_file:s0
 /vendor/lib64/libSemTelephonyProps\.so u:object_r:vendor_file:s0
+/vendor/lib64/libSingleTakeBlurDetection\.uniplugin@1\.0\.so u:object_r:vendor_file:s0
+/vendor/lib64/libtensorflowLite\.singletake\.camera\.samsung\.so u:object_r:vendor_file:s0
 /vendor/lib64/uwb_uci\.hal\.so u:object_r:vendor_file:s0
 /vendor/lib64/vendor\.samsung\.hardware\.biometrics\.face@2\.0\.so u:object_r:vendor_file:s0
 /vendor/lib64/vendor\.samsung\.hardware\.biometrics\.face@3\.0\.so u:object_r:vendor_file:s0

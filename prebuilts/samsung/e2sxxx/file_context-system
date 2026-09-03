@@ -1,4 +1,6 @@
 /system u:object_r:system_file:s0
+/system/app/UwbRROverlayMccMncRegulation u:object_r:system_file:s0
+/system/app/UwbRROverlayMccMncRegulation/UwbRROverlayMccMncRegulation\.apk u:object_r:system_file:s0
 /system/app/UwbTest u:object_r:system_file:s0
 /system/app/UwbTest/oat u:object_r:system_file:s0
 /system/app/UwbTest/oat/arm64 u:object_r:system_file:s0
@@ -62,3 +64,5 @@
 /system/priv-app/SamsungCamera/oat/arm64/SamsungCamera\.art u:object_r:system_file:s0
 /system/priv-app/SamsungCamera/oat/arm64/SamsungCamera\.odex u:object_r:system_file:s0
 /system/priv-app/SamsungCamera/oat/arm64/SamsungCamera\.vdex u:object_r:system_file:s0
+/system/priv-app/SamsungCamera/SamsungCamera\.apk u:object_r:system_file:s0
+/system/priv-app/SamsungCamera/SamsungCamera\.apk\.prof u:object_r:system_file:s0

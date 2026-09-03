@@ -24,12 +24,14 @@
 /system/lib/vendor\.samsung\.hardware\.security\.hdcp\.wifidisplay-V2-ndk\.so u:object_r:system_lib_file:s0
 /system/lib/wfd_log\.so u:object_r:system_lib_file:s0
 /system/lib64 u:object_r:system_lib_file:s0
+/system/lib64/lib_SoundBooster_ver1050\.so u:object_r:vendor_file:s0
 /system/lib64/libeden_wrapper_system\.so u:object_r:system_lib_file:s0
 /system/lib64/libhigh_dynamic_range\.arcsoft\.so u:object_r:system_lib_file:s0
 /system/lib64/libhigh_res\.arcsoft\.so u:object_r:system_lib_file:s0
 /system/lib64/liblow_light_hdr\.arcsoft\.so u:object_r:system_lib_file:s0
 /system/lib64/libmidas_core\.camera\.samsung\.so u:object_r:system_lib_file:s0
 /system/lib64/libmidas_DNNInterface\.camera\.samsung\.so u:object_r:system_lib_file:s0
+/system/lib64/libsamsungSoundbooster_plus_legacy\.so u:object_r:vendor_file:s0
 /system/lib64/libsnap_aidl\.snap\.samsung\.so u:object_r:system_lib_file:s0
 /system/lib64/libsuperresolution_raw\.arcsoft\.so u:object_r:system_lib_file:s0
 /system/lib64/libsuperresolution_wrapper_v2\.camera\.samsung\.so u:object_r:system_lib_file:s0

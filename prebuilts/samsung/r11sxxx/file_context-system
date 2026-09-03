@@ -77,6 +77,7 @@
 /system/lib/android\.hardware\.graphics\.common@1\.0\.so u:object_r:system_lib_file:s0
 /system/lib/android\.hardware\.graphics\.common@1\.1\.so u:object_r:system_lib_file:s0
 /system/lib/android\.hardware\.graphics\.common@1\.2\.so u:object_r:system_lib_file:s0
+/system/lib/android\.hardware\.graphics\.common-V5-ndk\.so u:object_r:system_lib_file:s0
 /system/lib/android\.hardware\.graphics\.common-V6-ndk\.so u:object_r:system_lib_file:s0
 /system/lib/android\.hardware\.graphics\.composer3-V4-ndk\.so u:object_r:system_lib_file:s0
 /system/lib/android\.hardware\.graphics\.mapper@2\.0\.so u:object_r:system_lib_file:s0
