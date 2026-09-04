@@ -74,9 +74,7 @@ if [[ "$SOURCE_FP_SENSOR_CONFIG" != "$TARGET_FP_SENSOR_CONFIG" ]]; then
     system/framework/framework.jar/smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager.smali
     system/framework/framework.jar/smali_classes6/com/samsung/android/bio/fingerprint/SemFingerprintManager\$Characteristics.smali
     system/framework/framework.jar/smali_classes6/com/samsung/android/rune/InputRune.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintEntry.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintLockSettings.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
     "
     for f in $FTP; do
         sed -i "s/$SOURCE_FP_SENSOR_CONFIG/$TARGET_FP_SENSOR_CONFIG/g" "$APKTOOL_DIR/$f"
@@ -147,43 +145,13 @@ if [[ "$SOURCE_HFR_MODE" != "$TARGET_HFR_MODE" ]]; then
     system/framework/secinputdev-service.jar/smali/com/samsung/android/hardware/secinputdev/SemInputDeviceManagerService.smali
     system/framework/secinputdev-service.jar/smali/com/samsung/android/hardware/secinputdev/utils/SemInputFeatures.smali
     system/framework/secinputdev-service.jar/smali/com/samsung/android/hardware/secinputdev/utils/SemInputFeaturesExtra.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/display/SecDisplayUtils.smali
     system/priv-app/SettingsProvider/SettingsProvider.apk/smali/com/android/providers/settings/DatabaseHelper.smali
     system_ext/priv-app/SystemUI/SystemUI.apk/smali/com/android/systemui/LsRune.smali
     "
     for f in $FTP; do
         sed -i "s/\"$SOURCE_HFR_MODE\"/\"$TARGET_HFR_MODE\"/g" "$APKTOOL_DIR/$f"
     done
-
-    LOG_STEP_OUT
-fi
-
-# Exynos 9825 targets have fixed 60 Hz panels.  Changing only CoreRune does
-# not hide the One UI 8 Settings entry: HighRefreshRatePreferenceController
-# independently exposes it when the source device supports HFR.  Mark the
-# controller as unsupported after every generic HFR/resolution transformation.
-if [[ "$TARGET_PLATFORM" == "exynos9825" && "$TARGET_HFR_MODE" == "0" ]]; then
-    LOG_STEP_IN "- Hiding unsupported refresh-rate settings for Exynos 9825"
-
-    DECODE_APK "system" "system/priv-app/SecSettings/SecSettings.apk"
-    REFRESH_RATE_CONTROLLER="$APKTOOL_DIR/system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/display/controller/HighRefreshRatePreferenceController.smali"
-
-    if [[ ! -f "$REFRESH_RATE_CONTROLLER" ]]; then
-        ABORT "Could not locate One UI 8 HighRefreshRatePreferenceController"
-    fi
-
-    sed -i '/^\.method public getAvailabilityStatus()I$/,/^\.end method$/c\
-.method public getAvailabilityStatus()I\
-    .locals 1\
-\
-    const/4 v0, 0x3\
-\
-    return v0\
-.end method' "$REFRESH_RATE_CONTROLLER"
-
-    if ! grep -A6 '^\.method public getAvailabilityStatus()I$' "$REFRESH_RATE_CONTROLLER" | grep -q 'const/4 v0, 0x3'; then
-        ABORT "Failed to hide Exynos 9825 refresh-rate preference"
-    fi
 
     LOG_STEP_OUT
 fi
@@ -196,7 +164,7 @@ if [[ "$SOURCE_HFR_SUPPORTED_REFRESH_RATE" != "$TARGET_HFR_SUPPORTED_REFRESH_RAT
 
     FTP="
     system/framework/framework.jar/smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/display/SecDisplayUtils.smali
     "
     for f in $FTP; do
         if [[ "$TARGET_HFR_SUPPORTED_REFRESH_RATE" != "none" ]]; then
@@ -216,7 +184,7 @@ if [[ "$SOURCE_HFR_DEFAULT_REFRESH_RATE" != "$TARGET_HFR_DEFAULT_REFRESH_RATE" ]
 
     FTP="
     system/framework/framework.jar/smali_classes6/com/samsung/android/hardware/display/RefreshRateConfig.smali
-    system/priv-app/SecSettings/SecSettings.apk/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
+    system/priv-app/SecSettings/SecSettings.apk/smali_classes5/com/samsung/android/settings/display/SecDisplayUtils.smali
     system/priv-app/SettingsProvider/SettingsProvider.apk/smali/com/android/providers/settings/DatabaseHelper.smali
     "
     for f in $FTP; do
