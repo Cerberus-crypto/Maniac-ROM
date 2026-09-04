@@ -13,15 +13,15 @@ diff --git a/smali/com/android/systemui/LsRune.smali b/smali/com/android/systemu
 index 648eb113..d04b1dd1 100644
 --- a/smali/com/android/systemui/LsRune.smali
 +++ b/smali/com/android/systemui/LsRune.smali
-@@ -676,7 +676,7 @@
+@@ -738,7 +738,7 @@
+     const/16 v16, 0x1
  
-     sput-boolean v3, Lcom/android/systemui/LsRune;->SECURITY_FINGERPRINT_IN_DISPLAY:Z
+     sput-boolean v16, Lcom/android/systemui/LsRune;->SECURITY_FINGERPRINT_IN_DISPLAY:Z
  
--    sput-boolean v3, Lcom/android/systemui/LsRune;->SECURITY_FINGERPRINT_IN_DISPLAY_OPTICAL:Z
+-    sput-boolean v16, Lcom/android/systemui/LsRune;->SECURITY_FINGERPRINT_IN_DISPLAY_OPTICAL:Z
 +    sput-boolean v2, Lcom/android/systemui/LsRune;->SECURITY_FINGERPRINT_IN_DISPLAY_OPTICAL:Z
  
-     const-string v7, "SEC_FLOATING_FEATURE_BIOAUTH_CONFIG_FINGERPRINT_FEATURES"
- 
+     const-string v0, "SEC_FLOATING_FEATURE_BIOAUTH_CONFIG_FINGERPRINT_FEATURES"
+
 -- 
 2.51.0
-
