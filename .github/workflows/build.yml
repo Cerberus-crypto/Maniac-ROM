@@ -1,4 +1,4 @@
-name: Build Star7ROM
+name: Build DevandroidROM
 
 on:
   workflow_dispatch:
