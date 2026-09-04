@@ -3,29 +3,24 @@ From: ExtremeXT <75576145+ExtremeXT@users.noreply.github.com>
 Date: Sat, 21 Jun 2025 20:37:20 +0200
 Subject: [PATCH] Nuke Knox HDM version
 
-Signed-off-by: Ocin4ever <85343782+Ocin4ever@users.noreply.github.com>
 ---
- .../samsung/android/knox/hdm/HdmManager.smali | 37 +------------------
- 1 file changed, 2 insertions(+), 35 deletions(-)
-
 diff --git a/smali_classes4/com/samsung/android/knox/hdm/HdmManager.smali b/smali_classes4/com/samsung/android/knox/hdm/HdmManager.smali
-index 4cbbc66e..704cecba 100644
+index dd046c0..81741ff 100644
 --- a/smali_classes4/com/samsung/android/knox/hdm/HdmManager.smali
 +++ b/smali_classes4/com/samsung/android/knox/hdm/HdmManager.smali
-@@ -35,7 +35,7 @@
+@@ -35,48 +35,9 @@
  .end method
  
  .method public static getHdmVersion()Ljava/lang/String;
 -    .locals 4
-+    .locals 2
- 
-     sget-object v0, Lcom/samsung/android/knox/hdm/HdmManager;->TAG:Ljava/lang/String;
- 
-@@ -43,40 +43,7 @@
- 
-     invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
- 
--    const-string/jumbo v0, "ro.vendor.hdm.hdm_supported_subsystem"
+-
+-    sget-object v0, Lcom/samsung/android/knox/hdm/HdmManager;->TAG:Ljava/lang/String;
+-
+-    const-string v1, "getHdmVersion() on HdmManager.java"
+-
+-    invoke-static {v0, v1}, Landroid/util/Log;->d(Ljava/lang/String;Ljava/lang/String;)I
+-
+-    const-string v0, "ro.vendor.hdm.hdm_supported_subsystem"
 -
 -    const-string v1, "none"
 -
@@ -56,7 +51,8 @@ index 4cbbc66e..704cecba 100644
 -    move-result-object v0
 -
 -    return-object v0
--
++    .locals 1
+ 
 -    :cond_0
 -    const-string v0, "2.0 - 95"
 +    const/4 v0, 0x0
@@ -65,4 +61,3 @@ index 4cbbc66e..704cecba 100644
  .end method
 -- 
 2.49.1
-
