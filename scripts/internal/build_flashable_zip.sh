@@ -26,16 +26,16 @@ TARGET_FINGERPRINT="${TARGET_FINGERPRINT//$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_P
 
 TMP_DIR="$OUT_DIR/zip"
 
-ROM_STATUS="OFFICIAL"
+ROM_STATUS="UNOFFICIAL"
 $ROM_IS_OFFICIAL && ROM_STATUS="OFFICIAL"
 
 ZIP_FILE_SUFFIX="-sign.zip"
 $DEBUG && ! $ROM_IS_OFFICIAL && ZIP_FILE_SUFFIX=".zip"
 
-FILE_NAME="Star7ROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+FILE_NAME="DevandroidROM_${ROM_STATUS}_${ROM_VERSION}_$(date +%Y%m%d)_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 while [ -f "$OUT_DIR/$FILE_NAME" ]; do
     INCREMENTAL=$((INCREMENTAL + 1))
-    FILE_NAME="Star7ROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
+    FILE_NAME="DevandroidROM_${ROM_VERSION}_$(date +%Y%m%d)-${INCREMENTAL}_${TARGET_CODENAME}${ZIP_FILE_SUFFIX}"
 done
 
 PRIVATE_KEY_PATH="$SRC_DIR/security/"
@@ -582,9 +582,9 @@ PRINT_HEADER()
     echo    'ui_print(" ");'
     echo    'ui_print("****************************************************");'
     echo -n 'ui_print("'
-    echo -n "Welcome to Star7ROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
+    echo -n "Welcome to DevandroidROM $ROM_CODENAME $ROM_VERSION for $TARGET_NAME!"
     echo    '");'
-    echo    'ui_print("Star7ROM developed by Star7");'
+    echo    'ui_print("DevandroidROM developed by Devandroid");'
     echo    'ui_print("ExtremeROM developed by ExtremeXT And Revived by ricci206 @XDAforums");'
     echo    'ui_print("Initial UN1CA build system coded by salvo_giangri @XDAforums");'
     echo    'ui_print("Special thanks to all ExtremeROM Maintainers, Contribuitors and Testers");'
@@ -614,7 +614,7 @@ PRINT_HEADER()
     echo    'ui_print("Proceeding...!");'
     echo    'ui_print(" ");'
     echo    'ui_print("****************************************************");'
-    echo    'ui_print("              Star7ROM     ONEUI 8.0                ");'
+    echo    'ui_print("              DevandroidROM     ONEUI 8.0                ");'
     echo    'ui_print("****************************************************");'
 }
 # ]
