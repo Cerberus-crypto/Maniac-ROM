@@ -8,10 +8,10 @@ Signed-off-by: ExtremeXT <75576145+ExtremeXT@users.noreply.github.com>
  .../NavigationBarSettingsUtil.smali           | 23 +------------------
  1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/smali_classes4/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali b/smali_classes4/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
+diff --git a/smali_classes5/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali b/smali_classes5/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
 index e321f2fd..b2bd7284 100644
---- a/smali_classes4/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
-+++ b/smali_classes4/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
+--- a/smali_classes5/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
++++ b/smali_classes5/com/samsung/android/settings/navigationbar/NavigationBarSettingsUtil.smali
 @@ -119,32 +119,11 @@
  .end method
  
@@ -48,4 +48,3 @@ index e321f2fd..b2bd7284 100644
  .method public static isGestureHintOn(Landroid/content/Context;)Z
 -- 
 2.49.1
-
