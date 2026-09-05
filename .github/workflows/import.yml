@@ -1,4 +1,4 @@
-name: Import dm3qxxx Prebuilts
+name: Import b0sxxx Prebuilts
 
 on:
   workflow_dispatch:
@@ -7,12 +7,12 @@ permissions:
   contents: write
 
 concurrency:
-  group: import-dm3qxxx-prebuilts-OneUI8.5
+  group: import-b0sxxx-prebuilts-OneUI8.5
   cancel-in-progress: false
 
 jobs:
   import-prebuilts:
-    name: Import dm3qxxx Prebuilts
+    name: Import b0sxxx Prebuilts
     runs-on: ubuntu-latest
 
     steps:
@@ -36,7 +36,7 @@ jobs:
             https://github.com/Devandroid-bit/Maniac-ROM.git \
             source-repo
 
-      - name: Import dm3qxxx prebuilts
+      - name: Import b0sxxx prebuilts
         run: |
           set -e
 
@@ -65,12 +65,12 @@ jobs:
       - name: Check imported files
         run: |
           echo "Total files imported:"
-          find prebuilts/samsung/dm3qxxx -type f | wc -l
+          find prebuilts/samsung/b0sxxx -type f | wc -l
 
       - name: Check for changes
         id: changes
         run: |
-          git add -A prebuilts/samsung/dm3qxxx
+          git add -A prebuilts/samsung/b0sxxx
 
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -83,7 +83,7 @@ jobs:
       - name: Commit changes
         if: steps.changes.outputs.changed == 'true'
         run: |
-          git commit -m "prebuilts: import dm3qxxx prebuilts"
+          git commit -m "prebuilts: import b0sxxx prebuilts"
 
       - name: Rebase onto latest OneUI8.5
         if: steps.changes.outputs.changed == 'true'
