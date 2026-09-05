@@ -1,0 +1,102 @@
+name: Import dm3qxxx Prebuilts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: import-dm3qxxx-prebuilts-OneUI8.5
+  cancel-in-progress: false
+
+jobs:
+  import-prebuilts:
+    name: Import dm3qxxx Prebuilts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout OneUI8.5 branch
+        uses: actions/checkout@v4
+        with:
+          ref: OneUI8.5
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone source repository
+        run: |
+          git clone \
+            --depth=1 \
+            --branch s22-Ultra \
+            https://github.com/Devandroid-bit/Maniac-ROM.git \
+            source-repo
+
+      - name: Import dm3qxxx prebuilts
+        run: |
+          set -e
+
+          SOURCE_DIR="source-repo/prebuilts/samsung/dm3qxxx"
+          DEST_DIR="prebuilts/samsung/dm3qxxx"
+
+          if [ ! -d "$SOURCE_DIR" ]; then
+            echo "::error::Source directory does not exist: $SOURCE_DIR"
+            exit 1
+          fi
+
+          echo "Removing existing prebuilts..."
+          rm -rf "$DEST_DIR"
+
+          echo "Creating destination directory..."
+          mkdir -p "$DEST_DIR"
+
+          echo "Copying prebuilts..."
+          rsync -a \
+            --delete \
+            "$SOURCE_DIR/" \
+            "$DEST_DIR/"
+
+          echo "Import completed successfully."
+
+      - name: Check imported files
+        run: |
+          echo "Total files imported:"
+          find prebuilts/samsung/dm3qxxx -type f | wc -l
+
+      - name: Check for changes
+        id: changes
+        run: |
+          git add -A prebuilts/samsung/dm3qxxx
+
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected."
+          fi
+
+      - name: Commit changes
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git commit -m "prebuilts: import dm3qxxx prebuilts"
+
+      - name: Rebase onto latest OneUI8.5
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git fetch origin OneUI8.5
+          git rebase origin/OneUI8.5
+
+      - name: Push changes to OneUI8.5
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git push origin HEAD:OneUI8.5
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf source-repo
